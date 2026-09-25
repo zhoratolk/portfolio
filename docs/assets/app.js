@@ -254,7 +254,7 @@
   /* ---------------- renderers ---------------- */
   function renderFilters() {
     $("#filters").innerHTML = FILTERS.map((f) =>
-      `<button type="button" class="chip" data-f="${f.id}" aria-pressed="${f.id === filter}">${esc(f[lang])}</button>`).join("");
+      `<button type="button" class="chip" data-f="${f.id}" aria-pressed="${f.id === filter}">${esc(f[lang])}</button>`).join(" ");
   }
 
   function renderProjects() {
