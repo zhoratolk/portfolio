@@ -1,6 +1,6 @@
 <div align="center">
 
-# Georgy · DevOps / MLOps engineer
+# Georgy Tolkachev · DevOps / MLOps engineer
 
 **I build and run the infrastructure that LLM and GPU products live on:**
 **from assembling a server to auto-deploys with rollback, monitoring and model quality evaluation.**
@@ -8,6 +8,7 @@
 [![Site](https://img.shields.io/badge/site-zhoratolk.github.io%2Fportfolio-22c55e?style=for-the-badge&logo=githubpages&logoColor=white)](https://zhoratolk.github.io/portfolio/)
 [![Русский](https://img.shields.io/badge/lang-Русский-334155?style=for-the-badge)](README.md)
 [![GitHub](https://img.shields.io/badge/github-zhoratolk-1e293b?style=for-the-badge&logo=github)](https://github.com/zhoratolk)
+[![Telegram](https://img.shields.io/badge/telegram-@joparo__me-26A5E4?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/joparo_me)
 
 ![Linux](https://img.shields.io/badge/Linux-FCC624?logo=linux&logoColor=black)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)
@@ -124,5 +125,5 @@ The code of the main projects is private. Sanitized excerpts are in [`snippets/`
 ---
 
 <div align="center">
-<sub>Saint Petersburg · open to remote work and relocating to Almaty · <a href="https://zhoratolk.github.io/portfolio/">portfolio site</a></sub>
+<sub>Telegram <a href="https://t.me/joparo_me">@joparo_me</a> · Saint Petersburg · open to remote work and relocating to Almaty · <a href="https://zhoratolk.github.io/portfolio/">portfolio site</a></sub>
 </div>

@@ -11,7 +11,7 @@
     "hero.eyebrow": "Open to offers · DevOps / MLOps / AI",
     "hero.h1a": "Infrastructure",
     "hero.h1b": "that LLMs run on",
-    "hero.lead": "I'm Georgy. I build and run GPU infrastructure for AI products: hardware and Ansible, unattended deploys with rollback, monitoring, and model quality evaluation. Everything below is live. None of it is a tutorial project.",
+    "hero.lead": "I'm Georgy Tolkachev. I build and run GPU infrastructure for AI products: hardware and Ansible, unattended deploys with rollback, monitoring, and model quality evaluation. Everything below is live. None of it is a tutorial project.",
     "hero.cta1": "See projects", "hero.cta2": "Case studies on GitHub",
     "term.aria": "Log of an automatic deploy with rollback",
     "stats.aria": "Numbers",
@@ -66,7 +66,7 @@
     "ct.h": "Looking for a team where infrastructure is the product",
     "ct.sub": "ML platform, inference or SRE. Based in Saint Petersburg, remote or hybrid, open to relocating to Almaty.",
     "ct.repo": "Portfolio repository",
-    "ft.l": "© 2026 Georgy · static site, no frameworks",
+    "ft.l": "© 2026 Georgy Tolkachev · static site, no frameworks",
     "open": "Read the case study", "code": "Public repo", "private": "private", "public": "public",
   };
 
@@ -266,7 +266,7 @@
       el.setAttribute("aria-label", lang === "en" ? EN[k] : ruCache["aria:" + k]);
     });
     $$(".lang button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.lang === lang)));
-    document.title = lang === "en" ? "Georgy — DevOps / MLOps" : "Георгий — DevOps / MLOps";
+    document.title = lang === "en" ? "Georgy Tolkachev — DevOps / MLOps" : "Георгий Толкачёв — DevOps / MLOps";
     renderFilters(); renderProjects(); renderPostmortems(); renderTiers();
     try { localStorage.setItem("lang", lang); } catch (_) { /* storage unavailable */ }
   }

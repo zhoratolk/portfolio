@@ -1,6 +1,6 @@
 <div align="center">
 
-# Георгий · DevOps / MLOps-инженер
+# Георгий Толкачёв · DevOps / MLOps-инженер
 
 **Строю и эксплуатирую инфраструктуру, на которой работают LLM- и GPU-продукты:**
 **от сборки сервера до автодеплоя с откатом, мониторинга и оценки качества моделей.**
@@ -8,6 +8,7 @@
 [![Сайт](https://img.shields.io/badge/сайт-zhoratolk.github.io%2Fportfolio-22c55e?style=for-the-badge&logo=githubpages&logoColor=white)](https://zhoratolk.github.io/portfolio/)
 [![English](https://img.shields.io/badge/lang-English-334155?style=for-the-badge)](README.en.md)
 [![GitHub](https://img.shields.io/badge/github-zhoratolk-1e293b?style=for-the-badge&logo=github)](https://github.com/zhoratolk)
+[![Telegram](https://img.shields.io/badge/telegram-@joparo__me-26A5E4?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/joparo_me)
 
 ![Linux](https://img.shields.io/badge/Linux-FCC624?logo=linux&logoColor=black)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)
@@ -123,5 +124,5 @@ flowchart LR
 ---
 
 <div align="center">
-<sub>Санкт-Петербург · открыт к удалённой работе и переезду в Алматы · <a href="https://zhoratolk.github.io/portfolio/">сайт-портфолио</a></sub>
+<sub>Telegram <a href="https://t.me/joparo_me">@joparo_me</a> · Санкт-Петербург · открыт к удалённой работе и переезду в Алматы · <a href="https://zhoratolk.github.io/portfolio/">сайт-портфолио</a></sub>
 </div>
