@@ -118,15 +118,25 @@ and the main lever moved to the lower length bound. The next batch landed within
 
 ## 8. Fine-tuning
 
-**Done: an RVC voice model.** For the video-review channel I fine-tuned a model of my own voice:
+**Done: a voice for anime shorts.** The manga video-review channel needed narration in my voice. I
+compared three approaches, from cheap to expensive:
+
+| Approach | What it is | Training |
+|---|---|---|
+| Silero TTS v4 (ru) | off-the-shelf synthesis, stock voices | none |
+| XTTS | voice cloning from a short sample | none, zero-shot |
+| RVC | voice conversion, fine-tuned on my data | yes |
+
+Fine-tuning RVC:
 
 - dataset — 83 fragments of my voice messages (~126 MB of WAV);
 - I tried cleaning the voice from background noise with Demucs on segments from 60 to 240 seconds;
+- preparation: slicing into fragments, resampling to 16 kHz, F0 and feature extraction, a FAISS
+  feature index for retrieval at inference;
 - fine-tuned from pretrained HiFi-GAN generator and discriminator (40 kHz, with F0);
 - 59 epochs on a desktop GTX 1650 4 GB, ~16 minutes per epoch;
 - the best checkpoint was picked by the lowest generator loss (epoch 34), and an overtraining
-  detector tracked the loss rising after the minimum;
-- I tried XTTS in parallel.
+  detector tracked the loss rising after the minimum.
 
 The product outcome was a no: for the reviews a live voice-over turned out better than synthesis —
 the author's voice is the product. The experiment showed what your own voice costs: a dataset, hours

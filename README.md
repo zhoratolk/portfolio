@@ -65,7 +65,8 @@
 | **[Запой](cases/zapoy.md)** | Локальный голосовой ассистент | llama.cpp + Qdrant + STT/TTS в compose-профилях, red-team на косвенный prompt injection |
 | **[smeta-ai-kz](cases/smeta-ai-kz.md)** | AI-проверка строительных смет (кейс акселератора) | LLM отвечает только за семантику, цифры считает детерминированный код |
 | **[AIkimat / RelayGov](cases/aikimat.md)** | On-premise ассистент для органа власти | LangGraph с согласованием человеком, методика расчёта GPU под продакшен |
-| **[manga-shorts](cases/manga-shorts.md)** | Видеообзоры с vision-моделью | ~8K токенов на главу за счёт сеток превью вместо постраничного разбора |
+| **[manga-shorts](cases/manga-shorts.md)** | Видеообзоры с vision-моделью | ~8K токенов на главу за счёт сеток превью; голос для озвучки — дообученная модель RVC |
+| **[Vtube ACMT](cases/vtube-acmt.md)** | Генеративные модели для авто-рига VTuber | 3D по одной картинке (StdGEN), нарезка слоёв на NF4, замеры времени и памяти на GPU, отрицательные результаты с IoU |
 
 ### Проектирование
 
@@ -78,7 +79,6 @@
 | Проект | Что это |
 |---|---|
 | **[Dofamin Shop](cases/dofamin-shop.md)** | Android (Next.js + Capacitor): парсер маркетплейсов на устройстве, ~750 тестов |
-| **[Vtube ACMT](cases/vtube-acmt.md)** | Контрибьюции через PR: авториг VTuber-модели, GPU-замеры, лицензионная разведка |
 | **[Shakedown](cases/shakedown.md)** | Рогалик на Godot 4.7: 16 фаз, 650+ тестов GdUnit4 |
 | **Barotrauma 40K patch** | Мод баланса: генераторы контента и валидатор на Python, сборка zip-пакета |
 
@@ -117,9 +117,6 @@ flowchart LR
 | **Эксплуатирую сам** | Linux (Ubuntu Server), systemd, Bash, Docker / Compose, NVIDIA Container Toolkit (CDI), CUDA/NVENC, Ansible, GitHub Actions, ufw / iptables, Samba, Tailscale, SQLite, Python, faster-whisper, pyannote, ffmpeg, FastAPI, LangGraph, LLM API нескольких провайдеров, бейк-офф моделей, eval harness, llama.cpp (GGUF, GBNF), BGE-M3, Qdrant (гибридный поиск, RRF), RVC-дообучение |
 | **Проектировал, не эксплуатировал** | Kubernetes + GPU Operator, vLLM, KEDA, Harbor, Qdrant в кластере, дообучение LLM на собранном датасете, Redis Streams, RabbitMQ / Celery |
 | **Изучаю сейчас** | Kubernetes на практике, Terraform, Prometheus / Grafana / Loki, vLLM на своём железе |
-
-Правило, по которому составлена таблица: технология стоит в первой строке, только если я могу три минуты
-рассказывать, что с ней ломалось и как чинил.
 
 ## Постмортемы, которые стоит прочитать
 

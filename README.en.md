@@ -66,7 +66,8 @@
 | **[Zapoy](cases/en/zapoy.md)** | A local voice assistant | llama.cpp + Qdrant + STT/TTS in compose profiles, red-team against indirect prompt injection |
 | **[smeta-ai-kz](cases/en/smeta-ai-kz.md)** | AI review of construction estimates (accelerator case) | The LLM handles only semantics, numbers are computed by deterministic code |
 | **[AIkimat / RelayGov](cases/en/aikimat.md)** | An on-prem assistant for a government office | LangGraph with human approval, a GPU sizing method for production |
-| **[manga-shorts](cases/en/manga-shorts.md)** | Video reviews with a vision model | ~8K tokens per chapter via thumbnail grids instead of page-by-page analysis |
+| **[manga-shorts](cases/en/manga-shorts.md)** | Video reviews with a vision model | ~8K tokens per chapter via thumbnail grids; the narration voice is a fine-tuned RVC model |
+| **[Vtube ACMT](cases/en/vtube-acmt.md)** | Generative models for VTuber auto-rigging | 3D from a single image (StdGEN), NF4 layer slicing, GPU time and memory benchmarks, negative results with IoU |
 
 ### Design
 
@@ -79,7 +80,6 @@
 | Project | What it is |
 |---|---|
 | **[Dofamin Shop](cases/en/dofamin-shop.md)** | Android (Next.js + Capacitor): an on-device marketplace parser, ~750 tests |
-| **[Vtube ACMT](cases/en/vtube-acmt.md)** | Contributions via PRs: VTuber model auto-rig, GPU benchmarks, licensing research |
 | **[Shakedown](cases/en/shakedown.md)** | A Godot 4.7 roguelike: 16 phases, 650+ GdUnit4 tests |
 | **Barotrauma 40K patch** | A balance mod: content generators and a validator in Python, zip packaging |
 
@@ -118,9 +118,6 @@ flowchart LR
 | **Operate myself** | Linux (Ubuntu Server), systemd, Bash, Docker / Compose, NVIDIA Container Toolkit (CDI), CUDA/NVENC, Ansible, GitHub Actions, ufw / iptables, Samba, Tailscale, SQLite, Python, faster-whisper, pyannote, ffmpeg, FastAPI, LangGraph, LLM APIs from several providers, model bake-offs, eval harnesses, llama.cpp (GGUF, GBNF), BGE-M3, Qdrant (hybrid search, RRF), RVC fine-tuning |
 | **Designed, not operated** | Kubernetes + GPU Operator, vLLM, KEDA, Harbor, clustered Qdrant, LLM fine-tuning on the collected dataset, Redis Streams, RabbitMQ / Celery |
 | **Learning now** | Kubernetes in practice, Terraform, Prometheus / Grafana / Loki, vLLM on my own hardware |
-
-The rule behind this table: a technology goes in the first row only if I can talk for three minutes
-about what broke with it and how I fixed it.
 
 ## Postmortems worth reading
 

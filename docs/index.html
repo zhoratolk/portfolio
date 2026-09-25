@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css?v=6">
+  <link rel="stylesheet" href="assets/style.css?v=7">
 </head>
 <body>
 <a class="skip" href="#main" data-i18n="skip">К содержимому</a>
@@ -286,8 +286,8 @@
           <p data-i18n="ml.c1p">BGE-M3 даёт dense и sparse за один проход, Qdrant сливает их через RRF. Порог только на dense-ветке, семантическая дедупликация фактов, бюджет 200 мс.</p>
         </article>
         <article class="card reveal">
-          <h3 data-i18n="ml.c2h">Дообучение: RVC</h3>
-          <p data-i18n="ml.c2p">83 фрагмента моего голоса, дообучение от HiFi-GAN, 59 эпох на GTX 1650, лучший чекпоинт по лоссу, детектор переобучения. В прод не пошло: живой голос оказался лучше.</p>
+          <h3 data-i18n="ml.c2h">Дообучение: голос для аниме-шортсов</h3>
+          <p data-i18n="ml.c2p">Silero против XTTS против RVC. 83 фрагмента моего голоса, дообучение от HiFi-GAN, 59 эпох на GTX 1650, лучший чекпоинт по лоссу, детектор переобучения. В прод не пошло: живой голос оказался лучше.</p>
         </article>
         <article class="card reveal">
           <h3 data-i18n="ml.c3h">Отказы с цифрами</h3>
@@ -421,7 +421,6 @@
       <p class="kicker reveal" data-i18n="st.k">Стек</p>
       <h2 class="reveal" id="stack-h" data-i18n="st.h">Честно по уровням</h2>
       <div class="tiers" id="tiers"></div>
-      <p class="rule reveal" data-i18n="st.rule">Правило: технология попадает в первую строку, только если я могу три минуты рассказывать, что с ней ломалось и как я это чинил.</p>
     </div>
   </section>
 
@@ -454,6 +453,6 @@
   </div>
 </footer>
 
-<script src="assets/app.js?v=6"></script>
+<script src="assets/app.js?v=7"></script>
 </body>
 </html>
