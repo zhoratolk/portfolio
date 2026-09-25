@@ -33,6 +33,25 @@ jobs:
           args: --offline --no-progress --include-fragments './**/*.md' 'docs/**/*.html'
           fail: true
 
+  translations:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      # Every Russian case study must have an English twin with the same headings,
+      # diagrams, code blocks and table rows - so an edit to one language cannot quietly
+      # leave the other behind.
+      - name: Structure matches between RU and EN
+        run: |
+          status=0
+          for f in cases/*.md; do
+            python tools/check_translation.py "$f" "cases/en/$(basename "$f")" || status=1
+          done
+          python tools/check_translation.py README.md README.en.md || status=1
+          exit $status
+
   site:
     runs-on: ubuntu-latest
     steps:
