@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css?v=2">
+  <link rel="stylesheet" href="assets/style.css?v=3">
 </head>
 <body>
 <a class="skip" href="#main" data-i18n="skip">К содержимому</a>
@@ -23,6 +23,7 @@
     <a class="brand" href="#top" aria-label="В начало"><b>zhora</b>@tower:~$</a>
     <nav class="nav-links" aria-label="Разделы">
       <a href="#infra" data-i18n="nav.infra">Инфраструктура</a>
+      <a href="#agents" data-i18n="nav.agents">Агенты</a>
       <a href="#projects" data-i18n="nav.projects">Проекты</a>
       <a href="#postmortems" data-i18n="nav.pm">Постмортемы</a>
       <a href="#stack" data-i18n="nav.stack">Стек</a>
@@ -39,7 +40,7 @@
   <section class="hero" id="top">
     <div class="wrap">
       <div>
-        <span class="eyebrow"><span class="pulse" aria-hidden="true"></span><span data-i18n="hero.eyebrow">Открыт к предложениям · DevOps / MLOps</span></span>
+        <span class="eyebrow"><span class="pulse" aria-hidden="true"></span><span data-i18n="hero.eyebrow">Открыт к предложениям · DevOps / MLOps / AI</span></span>
         <h1><span data-i18n="hero.h1a">Инфраструктура,</span><br><span class="grad" data-i18n="hero.h1b">на которой живут LLM</span></h1>
         <p class="lead" data-i18n="hero.lead">Меня зовут Георгий. Собираю и эксплуатирую GPU-инфраструктуру под AI-продукты: от железа и Ansible до автодеплоя с откатом, мониторинга и оценки качества моделей. Всё ниже поднято и работает, учебных проектов здесь нет.</p>
         <div class="cta">
@@ -66,7 +67,7 @@
       <div class="stats-grid">
         <div class="stat"><b data-count="3">3</b><span data-i18n="stats.s1">сервиса в проде на своём GPU-сервере</span></div>
         <div class="stat"><b data-count="5500" data-suffix="+">5500+</b><span data-i18n="stats.s2">автотестов в проектах</span></div>
-        <div class="stat"><b data-count="1200" data-suffix="+">1200+</b><span data-i18n="stats.s3">коммитов за 2026 год</span></div>
+        <div class="stat"><b data-count="1200" data-suffix="+">1200+</b><span data-i18n="stats.s3">коммитов с начала 2026 года</span></div>
         <div class="stat"><b>~11 ₽</b><span data-i18n="stats.s4">себестоимость обработки 3-часовой записи</span></div>
       </div>
     </div>
@@ -93,19 +94,19 @@
           <h3 data-i18n="p2.h">GPU и ML-пайплайны</h3>
           <p data-i18n="p2.p">Транскрипция, диаризация и рендер видео на двух картах.</p>
           <ul>
-            <li data-i18n="p2.l1">faster-whisper large-v3 + pyannote ≈14× реального времени</li>
+            <li data-i18n="p2.l1">faster-whisper large-v3 + pyannote ~14× реального времени</li>
             <li data-i18n="p2.l2">Аренда GPU между проектами без общего кода</li>
             <li data-i18n="p2.l3">Бюджет сессий NVENC, CDI, модели закреплены по хэшу</li>
           </ul>
         </article>
         <article class="card reveal">
           <div class="icon v" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 4.6L18.5 9.5l-4.6 1.9L12 16l-1.9-4.6L5.5 9.5l4.6-1.9Z"/><path d="M19 15l.9 2.1L22 18l-2.1.9L19 21l-.9-2.1L16 18l2.1-.9Z"/></svg></div>
-          <h3 data-i18n="p3.h">LLM-системы</h3>
+          <h3 data-i18n="p3.h">LLM и агентные системы</h3>
           <p data-i18n="p3.p">Модели там, где они нужны, и код там, где нужна точность.</p>
           <ul>
             <li data-i18n="p3.l1">Circuit breaker и маршрутизация по стоимости</li>
             <li data-i18n="p3.l2">Eval harness: инварианты и baseline в CI</li>
-            <li data-i18n="p3.l3">RAG, LangGraph с человеком в контуре, рой агентов</li>
+            <li data-i18n="p3.l3">Рой агентов с кворумом ревью, человек в контуре</li>
           </ul>
         </article>
       </div>
@@ -136,9 +137,10 @@
             <text x="50" y="144" fill="#f1f5f9" font-weight="600">Ansible · WSL</text>
             <text x="50" y="161" fill="#8b9ab3" font-size="12">site.yml --check --diff</text>
 
-            <rect x="20" y="300" width="190" height="70" rx="12" fill="#0b1120" stroke="#2a3752"/>
-            <text x="36" y="328" fill="#f1f5f9" font-weight="600" data-i18n="dg.users">Пользователи</text>
-            <text x="36" y="348" fill="#8b9ab3" font-size="12" data-i18n="dg.users2">Telegram-бот Катча</text>
+            <rect x="20" y="282" width="190" height="96" rx="12" fill="#0b1120" stroke="#f59e0b" stroke-opacity=".6" stroke-dasharray="5 4"/>
+            <text x="36" y="306" fill="#f59e0b" font-size="12" class="mono" data-i18n="dg.outside">СНАРУЖИ · ИНТЕРНЕТ</text>
+            <text x="36" y="333" fill="#f1f5f9" font-weight="600" data-i18n="dg.users">Клиенты Катча</text>
+            <text x="36" y="353" fill="#8b9ab3" font-size="12" data-i18n="dg.users2">пишут боту в Telegram</text>
 
             <!-- server -->
             <rect x="250" y="20" width="590" height="415" rx="16" fill="#0a1222" stroke="#22c55e" stroke-opacity=".55"/>
@@ -248,6 +250,90 @@
     </div>
   </section>
 
+  <section class="block" id="agents" aria-labelledby="ag-h">
+    <div class="wrap">
+      <p class="kicker reveal" data-i18n="ag.k">Агентные системы</p>
+      <h2 class="reveal" id="ag-h" data-i18n="ag.h">Агентам не верят на слово</h2>
+      <p class="sub reveal" data-i18n="ag.sub">swarm-orchestrator — рой из моделей разных семейств. Цель раскладывается на задачи, каждый артефакт проходит кворум ревьюеров, а работа принимается только после реальной проверочной команды на машине. Рой уже писал код в двух моих проектах, в изолированных worktree и под ревью человека.</p>
+      <div class="diagram reveal">
+        <svg viewBox="0 0 1100 330" role="img" aria-labelledby="ag-t" xmlns="http://www.w3.org/2000/svg">
+          <title id="ag-t">Цикл роя агентов</title>
+          <defs>
+            <marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#64748b"/></marker>
+            <marker id="arv" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#a78bfa"/></marker>
+            <marker id="arg2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#22c55e"/></marker>
+            <marker id="arw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#f59e0b"/></marker>
+          </defs>
+          <g font-size="13" fill="#cbd5e1">
+            <rect x="20" y="110" width="130" height="74" rx="10" fill="#0f172a" stroke="#2a3752"/>
+            <text x="36" y="138" fill="#f1f5f9" font-weight="600" data-i18n="ag.goal">Цель</text>
+            <text x="36" y="158" fill="#8b9ab3" font-size="12" class="mono">+ verify_cmd</text>
+
+            <rect x="190" y="110" width="150" height="74" rx="10" fill="#0f172a" stroke="#2a3752"/>
+            <text x="206" y="138" fill="#f1f5f9" font-weight="600" data-i18n="ag.mgr">Менеджер</text>
+            <text x="206" y="158" fill="#8b9ab3" font-size="12" data-i18n="ag.mgr2">задачи, доска, план</text>
+
+            <rect x="380" y="110" width="150" height="74" rx="10" fill="#0f172a" stroke="#2a3752"/>
+            <text x="396" y="138" fill="#f1f5f9" font-weight="600" data-i18n="ag.disp">Диспетчер</text>
+            <text x="396" y="158" fill="#8b9ab3" font-size="12" data-i18n="ag.disp2">единственный спавнер</text>
+
+            <rect x="380" y="232" width="150" height="66" rx="10" fill="#f59e0b" fill-opacity=".07" stroke="#f59e0b" stroke-opacity=".55"/>
+            <text x="396" y="258" fill="#f1f5f9" font-weight="600" data-i18n="ag.aud">Ревизор спавна</text>
+            <text x="396" y="278" fill="#8b9ab3" font-size="12" data-i18n="ag.aud2">лимиты + вето</text>
+
+            <rect x="570" y="70" width="170" height="154" rx="12" fill="#0a1222" stroke="#38bdf8" stroke-opacity=".5"/>
+            <text x="586" y="94" fill="#38bdf8" font-size="12" class="mono" data-i18n="ag.wave">ВОЛНА · ПАРАЛЛЕЛЬНО</text>
+            <rect x="586" y="106" width="138" height="30" rx="7" fill="#0f172a" stroke="#2a3752"/>
+            <text x="598" y="126" font-size="12" data-i18n="ag.w1">исследователи</text>
+            <rect x="586" y="143" width="138" height="30" rx="7" fill="#0f172a" stroke="#2a3752"/>
+            <text x="598" y="163" font-size="12" data-i18n="ag.w2">реализаторы</text>
+            <rect x="586" y="180" width="138" height="30" rx="7" fill="#0f172a" stroke="#2a3752"/>
+            <text x="598" y="200" font-size="12" data-i18n="ag.w3">сверщики</text>
+
+            <rect x="780" y="110" width="140" height="74" rx="10" fill="#a78bfa" fill-opacity=".08" stroke="#a78bfa" stroke-opacity=".6"/>
+            <text x="796" y="138" fill="#f1f5f9" font-weight="600" data-i18n="ag.q">Кворум ≥3</text>
+            <text x="796" y="158" fill="#8b9ab3" font-size="12" data-i18n="ag.q2">один reject — стоп</text>
+
+            <rect x="960" y="110" width="120" height="74" rx="10" fill="#22c55e" fill-opacity=".08" stroke="#22c55e" stroke-opacity=".6"/>
+            <text x="974" y="138" fill="#f1f5f9" font-weight="600" data-i18n="ag.acc">Приёмщик</text>
+            <text x="974" y="158" fill="#8b9ab3" font-size="12" class="mono">verify_cmd</text>
+
+            <rect x="940" y="250" width="140" height="48" rx="10" fill="#0f172a" stroke="#22c55e" stroke-opacity=".6"/>
+            <text x="956" y="279" fill="#22c55e" font-weight="600" class="mono">goal_met</text>
+
+            <g fill="none" stroke-width="1.6">
+              <path d="M150 147 L 188 147" stroke="#64748b" marker-end="url(#ar2)"/>
+              <path d="M340 147 L 378 147" stroke="#64748b" marker-end="url(#ar2)"/>
+              <path d="M455 184 L 455 230" stroke="#f59e0b" marker-end="url(#arw)" class="dg-flow"/>
+              <path d="M530 147 L 568 147" stroke="#64748b" marker-end="url(#ar2)"/>
+              <path d="M740 147 L 778 147" stroke="#64748b" marker-end="url(#ar2)"/>
+              <path d="M920 147 L 958 147" stroke="#a78bfa" marker-end="url(#arv)"/>
+              <path d="M1020 184 L 1020 248" stroke="#22c55e" marker-end="url(#arg2)" class="dg-flow"/>
+              <path d="M1020 110 C 1020 30, 265 30, 265 108" stroke="#f87171" stroke-dasharray="5 6" marker-end="url(#ar2)" class="dg-flow"/>
+            </g>
+            <text x="560" y="26" fill="#f87171" font-size="12" class="mono" data-i18n="ag.back">находки → перепланирование · застой 3 итерации → стоп</text>
+          </g>
+        </svg>
+      </div>
+
+      <div class="pillars" style="margin-top:22px">
+        <article class="card reveal">
+          <h3 data-i18n="ag.c1h">Рой → PR, не в main</h3>
+          <p data-i18n="ag.c1p">Рой работает в изолированном git worktree на отдельной ветке. Перед мержем дифф читает человек. Команды, которые написала модель, без явного разрешения не выполняются.</p>
+        </article>
+        <article class="card reveal">
+          <h3 data-i18n="ag.c2h">LangGraph + interrupt()</h3>
+          <p data-i18n="ag.c2p">AIkimat: письмо гражданину не уходит, пока человек не нажал approve. Граф останавливается и ждёт, решение пишется в журнал аудита.</p>
+        </article>
+        <article class="card reveal">
+          <h3 data-i18n="ag.c3h">Инструменты с уровнем риска</h3>
+          <p data-i18n="ag.c3p">Запой: опасный вызов ждёт кнопку «Разрешить» в push-уведомлении. Red-team проверяет, выполнится ли заблокированный инструмент после отравленной страницы.</p>
+        </article>
+      </div>
+      <p class="pipe-note reveal" data-i18n="ag.note">Честно про ограничения: бесплатный шлюз роя зависит от сети. Когда модели отдают 403 или 429, рой останавливается на застое и не выдаёт пустой результат за готовый.</p>
+    </div>
+  </section>
+
   <section class="block" id="projects" aria-labelledby="proj-h">
     <div class="wrap">
       <p class="kicker reveal" data-i18n="proj.k">Проекты</p>
@@ -301,6 +387,6 @@
   </div>
 </footer>
 
-<script src="assets/app.js?v=2"></script>
+<script src="assets/app.js?v=3"></script>
 </body>
 </html>
