@@ -18,9 +18,14 @@ jobs:
       - uses: actions/checkout@v5
         with:
           fetch-depth: 0   # scan the whole history, not only the last commit
-      - uses: gitleaks/gitleaks-action@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # The CLI rather than gitleaks-action: the action scans `<first>^..<last>` of the
+      # push, and on the very first push of a branch the root commit has no parent, so it
+      # fails with "unknown revision" without scanning anything. The whole history of a
+      # portfolio repo is small - scan all of it every time.
+      - name: Scan the whole history for secrets
+        run: |
+          docker run --rm -v "$PWD:/repo" ghcr.io/gitleaks/gitleaks:v8.24.3 \
+            git /repo --redact --verbose --exit-code 1
 
   links:
     runs-on: ubuntu-latest
