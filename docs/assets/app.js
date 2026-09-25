@@ -48,6 +48,27 @@
     "ag.c2h": "LangGraph + interrupt()", "ag.c2p": "AIkimat: a letter to a citizen doesn't go out until a human presses approve. The graph stops and waits; the decision goes to the audit log.",
     "ag.c3h": "Tools with a risk level", "ag.c3p": "Zapoy: a risky call waits for an “Allow” button in a push notification. A red-team checks whether a locked tool runs after a poisoned page.",
     "ag.note": "Honest about limits: the swarm's free gateway depends on the network. When models return 403 or 429, the swarm stops on a stall instead of passing off an empty result as done.",
+    "ml.h": "The model lifecycle: from data to fine-tuning",
+    "ml.sub": "A model isn't just “plugged in”, it is run: chosen on my own data, version-pinned, served on real hardware, measured for quality and cost, with the signal fed back into the data. Every step below comes from a working project.",
+    "ml.1h": "Data", "ml.1p": "dataset_log from day one, raw model answers, retention",
+    "ml.2h": "Selection", "ml.2p": "a model bake-off on a real recording, through the same code as prod",
+    "ml.3h": "Versions", "ml.3p": "revision hash, weights on a volume, hub offline mode",
+    "ml.4h": "Serving", "ml.4p": "GPU leasing, NVENC budget, embeddings on CPU, GBNF",
+    "ml.5h": "Evaluation", "ml.5p": "invariants and baseline in CI, a tool-selection eval over 167 cases",
+    "ml.6h": "Loop", "ml.6p": "retention changes the config; an RVC voice model fine-tuned",
+    "bo.h": "Bake-off: 7 models on one 4.6 h recording",
+    "bo.p": "Cost to process the whole recording. On the right: moments that survived the filter and run time in seconds. A ~70× cost spread; the decision came from reading the found moments as a human, and from price.",
+    "ml.c1h": "RAG: hybrid, not “just vectors”", "ml.c1p": "BGE-M3 gives dense and sparse in one pass, Qdrant fuses them with RRF. A threshold only on the dense branch, semantic fact deduplication, a 200 ms budget.",
+    "ml.c2h": "Fine-tuning: RVC", "ml.c2p": "83 fragments of my voice, fine-tuned from HiFi-GAN, 59 epochs on a GTX 1650, best checkpoint by loss, an overtraining detector. Didn't ship: the live voice turned out better.",
+    "ml.c3h": "Rejections with numbers", "ml.c3p": "A local qwen3-32b cut moments before the punchline while a cloud flash model costs cents per recording, so self-hosting the LLM was rejected. The decision is recorded with the measurements.",
+    "ml.link": "Full MLOps case study →", "ml.link2": "RAG and memory →", "ml.link3": "CI/CD →",
+    "pr.k": "Principles", "pr.h": "How I make engineering decisions",
+    "pr.1h": "Check by fact", "pr.1p": "Not by exit code. An upload with exit code 0 once uploaded nothing.",
+    "pr.2h": "Model or code", "pr.2p": "A model where semantics are needed, code where precision is. Estimate figures are not trusted to an LLM.",
+    "pr.3h": "Own data", "pr.3p": "A model is chosen by a bake-off on a real recording, not by a leaderboard.",
+    "pr.4h": "Rollback over deploy", "pr.4p": "A deploy without rollback is a scheduled outage. “Tested” is a git ref.",
+    "pr.5h": "Medians", "pr.5p": "Not averages: one long stream drags the average to where no job ever was.",
+    "pr.6h": "An honest boundary", "pr.6p": "What I operate, what I designed and what I'm learning are kept apart. Negative results get written down too.",
     "pipe.h": "A deploy you can leave alone",
     "pipe.1h": "Push", "pipe.1p": "PR or master, never straight to prod",
     "pipe.2h": "CI", "pipe.2p": "2,200+ tests plus an offline eval of LLM moment selection",
@@ -83,7 +104,28 @@
 
   const PROJECTS = [
     {
-      slug: "gpu-server", cat: ["ops", "ml"], tag: "ops", featured: true,
+      slug: "ml-lifecycle", cat: ["ml", "ai", "ops"], tag: "ml", featured: true,
+      ru: { t: "MLOps: полный цикл модели", d: "Датасет с первого дня, бейк-офф 7 моделей на своих данных, версии по хэшу, раздача на GPU, три слоя оценки, мониторинг стоимости, петля от аналитики и дообучение голосовой модели RVC." },
+      en: { t: "MLOps: the full model lifecycle", d: "A dataset from day one, a bake-off of 7 models on my own data, versions pinned by hash, GPU serving, three evaluation layers, cost monitoring, an analytics feedback loop and fine-tuning an RVC voice model." },
+      m: [["7", { ru: "моделей в бейк-оффе", en: "models in the bake-off" }], ["~70×", { ru: "разброс цены", en: "cost spread" }], ["167", { ru: "eval-кейсов", en: "eval cases" }]],
+      s: ["bake-off", "eval harness", "RVC", "llama.cpp", "GBNF"],
+    },
+    {
+      slug: "rag", cat: ["ai"], tag: "ai",
+      ru: { t: "RAG и память", d: "Гибридный поиск BGE-M3 + Qdrant (dense + sparse, RRF), трёхуровневая память ассистента, семантическая дедупликация, цитирование источников." },
+      en: { t: "RAG and memory", d: "Hybrid search with BGE-M3 + Qdrant (dense + sparse, RRF), three-level assistant memory, semantic deduplication, source citations." },
+      m: [[{ ru: "200 мс", en: "200 ms" }, { ru: "бюджет ретривера", en: "retriever budget" }]],
+      s: ["BGE-M3", "Qdrant", "RRF", "SQLite"],
+    },
+    {
+      slug: "ci-cd", cat: ["ops"], tag: "ops",
+      ru: { t: "CI/CD", d: "Ветка green как контракт доставки, pull-деплой с откатом, eval-гейт LLM в CI, матрица Windows + Linux, сторож на Actions, дрейф Ansible." },
+      en: { t: "CI/CD", d: "The green branch as a delivery contract, pull deploy with rollback, an LLM eval gate in CI, a Windows + Linux matrix, a watchdog on Actions, Ansible drift." },
+      m: [["0", { ru: "открытых портов для деплоя", en: "open ports for deploys" }]],
+      s: ["GitHub Actions", "systemd", "gitleaks", "Ansible"],
+    },
+    {
+      slug: "gpu-server", cat: ["ops", "ml"], tag: "ops",
       ru: { t: "Домашний GPU-сервер как код", d: "Железо посчитано до покупки, 8 ролей Ansible, файрвол, который не отрезает сам себя, протокол аренды GPU, дедман-свич, бэкапы 3-2-1 и постмортемы трёх «тихих» смертей." },
       en: { t: "Home GPU server as code", d: "Hardware sized before purchase, 8 Ansible roles, a firewall that can't lock itself out, a GPU leasing protocol, a dead-man switch, 3-2-1 backups and postmortems of three silent deaths." },
       m: [["2×", "RTX 3060"], ["8", { ru: "ролей Ansible", en: "Ansible roles" }], ["3", { ru: "сервиса в проде", en: "prod services" }]],
@@ -119,10 +161,10 @@
     },
     {
       slug: "smeta-ai-kz", cat: ["ai"], tag: "ai",
-      ru: { t: "smeta-ai-kz", d: "AI-проверка строительных смет (кейс акселератора). LLM отвечает только за семантику, цифры и сверку с нормативами считает детерминированный код. RAG по СНиП РК." },
-      en: { t: "smeta-ai-kz", d: "AI review of construction estimates (accelerator case). The LLM handles semantics only; numbers and checks against the rate database are deterministic code. RAG over building codes." },
+      ru: { t: "smeta-ai-kz", d: "AI-проверка строительных смет (кейс акселератора). LLM отвечает только за семантику, цифры и сверку с нормативами считает детерминированный код." },
+      en: { t: "smeta-ai-kz", d: "AI review of construction estimates (accelerator case). The LLM handles semantics only; numbers and checks against the rate database are deterministic code." },
       m: [["10", { ru: "дней на MVP", en: "days to MVP" }], ["66", { ru: "тестов", en: "tests" }]],
-      s: ["Claude API", "RAG", "rapidfuzz", "Streamlit"],
+      s: ["Claude API", "rapidfuzz", "SQLite", "Streamlit"],
     },
     {
       slug: "aikimat", cat: ["ai", "design"], tag: "ai",
@@ -189,9 +231,9 @@
 
   const TIERS = [
     { cls: "t1", color: "#22c55e", ru: ["Эксплуатирую сам", "в продакшене, с инцидентами"], en: ["Run in production", "with incidents to show"],
-      items: ["Linux / Ubuntu Server", "systemd", "Bash", "Docker / Compose", "NVIDIA CTK (CDI)", "CUDA / NVENC", "Ansible", "GitHub Actions", "ufw / iptables", "Samba", "Tailscale", "SQLite", "Python", "FastAPI", "faster-whisper", "pyannote", "ffmpeg", "LangGraph", "LLM APIs", "RAG"] },
+      items: ["Linux / Ubuntu Server", "systemd", "Bash", "Docker / Compose", "NVIDIA CTK (CDI)", "CUDA / NVENC", "Ansible", "GitHub Actions", "ufw / iptables", "Samba", "Tailscale", "SQLite", "Python", "FastAPI", "faster-whisper", "pyannote", "ffmpeg", "LangGraph", "LLM APIs", "model bake-offs", "eval harness", "llama.cpp + GBNF", "BGE-M3", "Qdrant hybrid (RRF)", "RVC fine-tuning"] },
     { cls: "t2", color: "#f59e0b", ru: ["Проектировал", "архитектура и расчёт, без эксплуатации"], en: ["Designed", "architecture and sizing, not operated"],
-      items: ["Kubernetes + GPU Operator", "vLLM", "KEDA", "Harbor", "Qdrant cluster", "Redis Streams", "RabbitMQ / Celery"] },
+      items: ["Kubernetes + GPU Operator", "vLLM", "KEDA", "Harbor", "Qdrant cluster", "Redis Streams", "RabbitMQ / Celery", "LLM fine-tuning on own dataset"] },
     { cls: "t3", color: "#64748b", ru: ["Изучаю сейчас", "по плану, с практикой на своём железе"], en: ["Learning now", "on a plan, hands-on with my own hardware"],
       items: ["Kubernetes (minikube)", "Terraform", "Prometheus / Grafana / Loki", "vLLM self-hosted", "Argo CD"] },
   ];
@@ -266,6 +308,7 @@
       el.setAttribute("aria-label", lang === "en" ? EN[k] : ruCache["aria:" + k]);
     });
     $$(".lang button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.lang === lang)));
+    $$("[data-case]").forEach((a) => { a.href = caseUrl(a.dataset.case, lang); });
     document.title = lang === "en" ? "Georgy Tolkachev — DevOps / MLOps" : "Георгий Толкачёв — DevOps / MLOps";
     renderFilters(); renderProjects(); renderPostmortems(); renderTiers();
     try { localStorage.setItem("lang", lang); } catch (_) { /* storage unavailable */ }

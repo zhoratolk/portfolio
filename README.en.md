@@ -41,6 +41,14 @@
 
 ## Projects
 
+### Cross-project case studies: how I work with models and delivery
+
+| Case study | What's inside |
+|---|---|
+| **[MLOps: the full model lifecycle](cases/en/ml-lifecycle.md)** | Dataset logged from day one → a bake-off of 7 models on my own data (~70× cost spread) → versions pinned by hash → GPU serving → three evaluation layers → cost monitoring → an analytics feedback loop → fine-tuning an RVC voice model |
+| **[RAG and memory](cases/en/rag.md)** | Hybrid search with BGE-M3 + Qdrant (dense + sparse, RRF), three-level assistant memory, semantic deduplication, source citations, index sizing for production |
+| **[CI/CD](cases/en/ci-cd.md)** | The `green` branch as a delivery contract, pull deploy with rollback, an LLM eval gate in CI, a Windows + Linux matrix, a watchdog on Actions, Ansible drift detection |
+
 ### Infrastructure and operations
 
 | Project | What it is | Highlights |
@@ -56,7 +64,7 @@
 | **[Shorts-Maker](cases/en/shorts-maker.md)** | A channel's production pipeline: whisper → selection → NVENC → YouTube API | 1,260+ tests, diarization at ≈14× real time, retention analytics change the config |
 | **[swarm-orchestrator](cases/en/swarm-orchestrator.md)** · [public](https://github.com/zhoratolk/swarm-orchestrator) | A swarm of LLM agents across models | A quorum of ≥3 models, acceptance via a real `verify_cmd`, a secret scrubber, cost accounting |
 | **[Zapoy](cases/en/zapoy.md)** | A local voice assistant | llama.cpp + Qdrant + STT/TTS in compose profiles, red-team against indirect prompt injection |
-| **[smeta-ai-kz](cases/en/smeta-ai-kz.md)** | AI review of construction estimates (accelerator case) | The LLM handles only semantics, numbers are computed by deterministic code; RAG over building codes |
+| **[smeta-ai-kz](cases/en/smeta-ai-kz.md)** | AI review of construction estimates (accelerator case) | The LLM handles only semantics, numbers are computed by deterministic code |
 | **[AIkimat / RelayGov](cases/en/aikimat.md)** | An on-prem assistant for a government office | LangGraph with human approval, a GPU sizing method for production |
 | **[manga-shorts](cases/en/manga-shorts.md)** | Video reviews with a vision model | ~8K tokens per chapter via thumbnail grids instead of page-by-page analysis |
 
@@ -93,12 +101,22 @@ flowchart LR
   yt[(YouTube Analytics)] -->|retention| s
 ```
 
+## Principles I work by
+
+- **Check by fact, not by exit code.** An upload with exit code 0 once uploaded nothing.
+- **Models where they help, code where precision matters.** Estimate figures are computed by code, not by an LLM.
+- **A model is chosen on my own data.** A bake-off on a real recording, not a ranking from a blog.
+- **A deploy without rollback is a scheduled outage.** "Tested" is a git ref, not a phrase.
+- **Medians, not averages.** One four-hour stream drags the average to where no job ever was.
+- **Negative results get written down too.** The rejected local LLM and the voice model — with numbers.
+- **Say what was built and what was only designed.** This README is organized exactly that way.
+
 ## Stack — honest, by level
 
 | Level | Technologies |
 |---|---|
-| **Operate myself** | Linux (Ubuntu Server), systemd, Bash, Docker / Compose, NVIDIA Container Toolkit (CDI), CUDA/NVENC, Ansible, GitHub Actions, ufw / iptables, Samba, Tailscale, SQLite, Python, faster-whisper, pyannote, ffmpeg, FastAPI, LangGraph, LLM APIs from several providers, RAG |
-| **Designed, not operated** | Kubernetes + GPU Operator, vLLM, KEDA, Harbor, clustered Qdrant, Redis Streams, RabbitMQ / Celery |
+| **Operate myself** | Linux (Ubuntu Server), systemd, Bash, Docker / Compose, NVIDIA Container Toolkit (CDI), CUDA/NVENC, Ansible, GitHub Actions, ufw / iptables, Samba, Tailscale, SQLite, Python, faster-whisper, pyannote, ffmpeg, FastAPI, LangGraph, LLM APIs from several providers, model bake-offs, eval harnesses, llama.cpp (GGUF, GBNF), BGE-M3, Qdrant (hybrid search, RRF), RVC fine-tuning |
+| **Designed, not operated** | Kubernetes + GPU Operator, vLLM, KEDA, Harbor, clustered Qdrant, LLM fine-tuning on the collected dataset, Redis Streams, RabbitMQ / Celery |
 | **Learning now** | Kubernetes in practice, Terraform, Prometheus / Grafana / Loki, vLLM on my own hardware |
 
 The rule behind this table: a technology goes in the first row only if I can talk for three minutes

@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css?v=5">
+  <link rel="stylesheet" href="assets/style.css?v=6">
 </head>
 <body>
 <a class="skip" href="#main" data-i18n="skip">К содержимому</a>
@@ -23,6 +23,7 @@
     <a class="brand" href="#top" aria-label="В начало"><b>zhora</b>@tower:~$</a>
     <nav class="nav-links" aria-label="Разделы">
       <a href="#infra" data-i18n="nav.infra">Инфраструктура</a>
+      <a href="#mlops">MLOps</a>
       <a href="#agents" data-i18n="nav.agents">Агенты</a>
       <a href="#projects" data-i18n="nav.projects">Проекты</a>
       <a href="#postmortems" data-i18n="nav.pm">Постмортемы</a>
@@ -251,6 +252,67 @@
     </div>
   </section>
 
+  <section class="block" id="mlops" aria-labelledby="ml-h">
+    <div class="wrap">
+      <p class="kicker reveal">MLOps</p>
+      <h2 class="reveal" id="ml-h" data-i18n="ml.h">Цикл модели: от данных до дообучения</h2>
+      <p class="sub reveal" data-i18n="ml.sub">Модель не «подключают», а ведут: выбирают на своих данных, закрепляют версию, раздают на железе, меряют качество и цену и возвращают сигнал обратно в данные. Каждый шаг ниже взят из работающего проекта.</p>
+      <div class="pipe reveal">
+        <div class="step"><h4 data-i18n="ml.1h">Данные</h4><p data-i18n="ml.1p">dataset_log с первого дня, сырые ответы модели, досмотры</p></div>
+        <div class="step"><h4 data-i18n="ml.2h">Выбор</h4><p data-i18n="ml.2p">бейк-офф моделей на реальной записи тем же кодом, что в проде</p></div>
+        <div class="step"><h4 data-i18n="ml.3h">Версии</h4><p data-i18n="ml.3p">хэш ревизии, веса на томе, offline-режим хаба</p></div>
+        <div class="step"><h4 data-i18n="ml.4h">Раздача</h4><p data-i18n="ml.4p">аренда GPU, бюджет NVENC, эмбеддинги на CPU, GBNF</p></div>
+        <div class="step"><h4 data-i18n="ml.5h">Оценка</h4><p data-i18n="ml.5p">инварианты и baseline в CI, eval выбора инструментов на 167 кейсах</p></div>
+        <div class="step alt"><h4 data-i18n="ml.6h">Петля</h4><p data-i18n="ml.6p">досмотры меняют конфиг; дообучение голосовой модели RVC</p></div>
+      </div>
+
+      <div class="card bo reveal">
+        <div class="bo-head">
+          <h3 data-i18n="bo.h">Бейк-офф: 7 моделей на одной записи 4,6 ч</h3>
+          <p data-i18n="bo.p">Цена за обработку всей записи. Справа — сколько моментов пережило фильтр и сколько секунд шёл прогон. Разница в цене — ~70 раз; решали чтение найденных моментов человеком и цена.</p>
+        </div>
+          <div class="bo-row"><span class="bo-name mono">claude-sonnet-5</span><span class="bo-bar"><i style="width:100.0%"></i></span><span class="bo-val mono">$0.454</span><span class="bo-meta mono">9 · 226s</span></div>
+          <div class="bo-row"><span class="bo-name mono">gemini-3.7-flash</span><span class="bo-bar"><i style="width:18.7%"></i></span><span class="bo-val mono">$0.085</span><span class="bo-meta mono">8 · 28s</span></div>
+          <div class="bo-row"><span class="bo-name mono">minimax-m3</span><span class="bo-bar"><i style="width:14.1%"></i></span><span class="bo-val mono">$0.064</span><span class="bo-meta mono">6 · 259s</span></div>
+          <div class="bo-row"><span class="bo-name mono">qwen3.8-flash</span><span class="bo-bar"><i style="width:6.8%"></i></span><span class="bo-val mono">$0.031</span><span class="bo-meta mono">4 · 205s</span></div>
+          <div class="bo-row"><span class="bo-name mono">glm-5.3-flash</span><span class="bo-bar"><i style="width:3.3%"></i></span><span class="bo-val mono">$0.015</span><span class="bo-meta mono">8 · 416s</span></div>
+          <div class="bo-row"><span class="bo-name mono">deepseek-v4-flash</span><span class="bo-bar"><i style="width:2.4%"></i></span><span class="bo-val mono">$0.011</span><span class="bo-meta mono">6 · 1132s</span></div>
+          <div class="bo-row"><span class="bo-name mono">qwen3.7-flash</span><span class="bo-bar"><i style="width:1.5%"></i></span><span class="bo-val mono">$0.007</span><span class="bo-meta mono">7 · 90s</span></div>
+      </div>
+
+      <div class="pillars" style="margin-top:22px">
+        <article class="card reveal">
+          <h3 data-i18n="ml.c1h">RAG: гибрид, а не «просто векторы»</h3>
+          <p data-i18n="ml.c1p">BGE-M3 даёт dense и sparse за один проход, Qdrant сливает их через RRF. Порог только на dense-ветке, семантическая дедупликация фактов, бюджет 200 мс.</p>
+        </article>
+        <article class="card reveal">
+          <h3 data-i18n="ml.c2h">Дообучение: RVC</h3>
+          <p data-i18n="ml.c2p">83 фрагмента моего голоса, дообучение от HiFi-GAN, 59 эпох на GTX 1650, лучший чекпоинт по лоссу, детектор переобучения. В прод не пошло: живой голос оказался лучше.</p>
+        </article>
+        <article class="card reveal">
+          <h3 data-i18n="ml.c3h">Отказы с цифрами</h3>
+          <p data-i18n="ml.c3p">Локальная qwen3-32b обрезала моменты до панчлайна, облачная flash стоит центы за запись, поэтому самохостинг LLM отклонён. Решение записано вместе с замерами.</p>
+        </article>
+      </div>
+      <p class="pipe-note reveal"><a href="https://github.com/zhoratolk/portfolio/blob/main/cases/ml-lifecycle.md" data-case="ml-lifecycle" data-i18n="ml.link">Полный кейс MLOps →</a> · <a href="https://github.com/zhoratolk/portfolio/blob/main/cases/rag.md" data-case="rag" data-i18n="ml.link2">RAG и память →</a> · <a href="https://github.com/zhoratolk/portfolio/blob/main/cases/ci-cd.md" data-case="ci-cd" data-i18n="ml.link3">CI/CD →</a></p>
+    </div>
+  </section>
+
+  <section class="block" id="principles" aria-labelledby="pr-h">
+    <div class="wrap">
+      <p class="kicker reveal" data-i18n="pr.k">Принципы</p>
+      <h2 class="reveal" id="pr-h" data-i18n="pr.h">Как я принимаю инженерные решения</h2>
+      <div class="princ">
+        <div class="card reveal"><b>01</b><h3 data-i18n="pr.1h">Проверять фактом</h3><p data-i18n="pr.1p">Не кодом возврата. Заливка с кодом 0 однажды не залила ничего.</p></div>
+        <div class="card reveal"><b>02</b><h3 data-i18n="pr.2h">Модель или код</h3><p data-i18n="pr.2p">Модель — где нужна семантика, код — где нужна точность. Цифры сметы LLM не доверены.</p></div>
+        <div class="card reveal"><b>03</b><h3 data-i18n="pr.3h">Свои данные</h3><p data-i18n="pr.3p">Модель выбирается бейк-оффом на реальной записи, а не по рейтингу.</p></div>
+        <div class="card reveal"><b>04</b><h3 data-i18n="pr.4h">Откат важнее деплоя</h3><p data-i18n="pr.4p">Деплой без отката — плановый простой. «Протестировано» — это git-ref.</p></div>
+        <div class="card reveal"><b>05</b><h3 data-i18n="pr.5h">Медианы</h3><p data-i18n="pr.5p">Не средние: один длинный стрим утаскивает среднее туда, где не было ни одной задачи.</p></div>
+        <div class="card reveal"><b>06</b><h3 data-i18n="pr.6h">Честная граница</h3><p data-i18n="pr.6p">Отдельно — что эксплуатирую, что проектировал и что изучаю. Отрицательный результат тоже записывается.</p></div>
+      </div>
+    </div>
+  </section>
+
   <section class="block" id="agents" aria-labelledby="ag-h">
     <div class="wrap">
       <p class="kicker reveal" data-i18n="ag.k">Агентные системы</p>
@@ -392,6 +454,6 @@
   </div>
 </footer>
 
-<script src="assets/app.js?v=5"></script>
+<script src="assets/app.js?v=6"></script>
 </body>
 </html>

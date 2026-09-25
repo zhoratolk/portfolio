@@ -40,6 +40,14 @@
 
 ## Проекты
 
+### Сквозные кейсы: как я работаю с моделями и доставкой
+
+| Кейс | Что внутри |
+|---|---|
+| **[MLOps: полный цикл модели](cases/ml-lifecycle.md)** | Датасет пишется с первого дня → бейк-офф 7 моделей на своих данных (цена отличается в ~70 раз) → версии закреплены хэшами → раздача на GPU → три слоя оценки → мониторинг стоимости → петля от аналитики → дообучение голосовой модели RVC |
+| **[RAG и память](cases/rag.md)** | Гибридный поиск BGE-M3 + Qdrant (dense + sparse, RRF), трёхуровневая память ассистента, семантическая дедупликация, цитирование источников, расчёт индекса под прод |
+| **[CI/CD](cases/ci-cd.md)** | Ветка `green` как контракт доставки, pull-деплой с откатом, eval-гейт LLM в CI, матрица Windows + Linux, сторож на Actions, обнаружение дрейфа Ansible |
+
 ### Инфраструктура и эксплуатация
 
 | Проект | Что это | Ключевое |
@@ -55,7 +63,7 @@
 | **[Shorts-Maker](cases/shorts-maker.md)** | Продакшен-пайплайн канала: whisper → отбор → NVENC → YouTube API | 1 260+ тестов, диаризация ≈14× быстрее реального времени, аналитика досмотров меняет конфиг |
 | **[swarm-orchestrator](cases/swarm-orchestrator.md)** · [публичный](https://github.com/zhoratolk/swarm-orchestrator) | Рой LLM-агентов разных моделей | Кворум ≥3 моделей, приёмка через реальный `verify_cmd`, фильтр секретов, учёт стоимости |
 | **[Запой](cases/zapoy.md)** | Локальный голосовой ассистент | llama.cpp + Qdrant + STT/TTS в compose-профилях, red-team на косвенный prompt injection |
-| **[smeta-ai-kz](cases/smeta-ai-kz.md)** | AI-проверка строительных смет (кейс акселератора) | LLM отвечает только за семантику, цифры считает детерминированный код; RAG по СНиП РК |
+| **[smeta-ai-kz](cases/smeta-ai-kz.md)** | AI-проверка строительных смет (кейс акселератора) | LLM отвечает только за семантику, цифры считает детерминированный код |
 | **[AIkimat / RelayGov](cases/aikimat.md)** | On-premise ассистент для органа власти | LangGraph с согласованием человеком, методика расчёта GPU под продакшен |
 | **[manga-shorts](cases/manga-shorts.md)** | Видеообзоры с vision-моделью | ~8K токенов на главу за счёт сеток превью вместо постраничного разбора |
 
@@ -92,12 +100,22 @@ flowchart LR
   yt[(YouTube Analytics)] -->|досмотры| s
 ```
 
+## Принципы, по которым я работаю
+
+- **Проверять фактом, а не кодом возврата.** Заливка с кодом 0 однажды не залила ничего.
+- **Модель — там, где нужна; код — там, где нужна точность.** Цифры сметы считает код, а не LLM.
+- **Модель выбирается на своих данных.** Бейк-офф на реальной записи, а не рейтинг из блога.
+- **Деплой без отката — это плановый простой.** «Протестировано» — это git-ref, а не фраза.
+- **Медианы, а не средние.** Один четырёхчасовой стрим утаскивает среднее туда, где не была ни одна задача.
+- **Отрицательный результат тоже записывается.** Отвергнутая локальная LLM и голосовая модель — с цифрами.
+- **Писать, что сделано, а что спроектировано.** Этот README так и устроен.
+
 ## Стек — честно по уровням
 
 | Уровень | Технологии |
 |---|---|
-| **Эксплуатирую сам** | Linux (Ubuntu Server), systemd, Bash, Docker / Compose, NVIDIA Container Toolkit (CDI), CUDA/NVENC, Ansible, GitHub Actions, ufw / iptables, Samba, Tailscale, SQLite, Python, faster-whisper, pyannote, ffmpeg, FastAPI, LangGraph, LLM API нескольких провайдеров, RAG |
-| **Проектировал, не эксплуатировал** | Kubernetes + GPU Operator, vLLM, KEDA, Harbor, Qdrant в кластере, Redis Streams, RabbitMQ / Celery |
+| **Эксплуатирую сам** | Linux (Ubuntu Server), systemd, Bash, Docker / Compose, NVIDIA Container Toolkit (CDI), CUDA/NVENC, Ansible, GitHub Actions, ufw / iptables, Samba, Tailscale, SQLite, Python, faster-whisper, pyannote, ffmpeg, FastAPI, LangGraph, LLM API нескольких провайдеров, бейк-офф моделей, eval harness, llama.cpp (GGUF, GBNF), BGE-M3, Qdrant (гибридный поиск, RRF), RVC-дообучение |
+| **Проектировал, не эксплуатировал** | Kubernetes + GPU Operator, vLLM, KEDA, Harbor, Qdrant в кластере, дообучение LLM на собранном датасете, Redis Streams, RabbitMQ / Celery |
 | **Изучаю сейчас** | Kubernetes на практике, Terraform, Prometheus / Grafana / Loki, vLLM на своём железе |
 
 Правило, по которому составлена таблица: технология стоит в первой строке, только если я могу три минуты

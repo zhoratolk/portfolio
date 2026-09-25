@@ -2,11 +2,11 @@
 
 > An MVP for a Kazakhstan developer as part of an accelerator's scouting programme (BI Group + MOST BI):
 > intake of PDF/Excel estimates in Kazakh and Russian → line-item extraction → reconciliation against
-> a database of standard rates → finding discrepancies via RAG over SNiP RK (Kazakhstan building
-> codes) → an Excel report and a Streamlit interface.
+> a database of standard rates → an Excel report and a Streamlit interface. RAG over SNiP RK
+> (Kazakhstan building codes) is designed and is the next stage.
 
 **Role:** solo, from spec to demo · **Timeline:** MVP in 10 days, development afterwards
-**Stack:** Python · Claude API · pdfplumber/openpyxl · rapidfuzz · SQLite · RAG · Streamlit · pytest
+**Stack:** Python · Claude API · pdfplumber/openpyxl · rapidfuzz · SQLite · Streamlit · pytest
 **Numbers:** 30 commits · 66 tests
 **Code:** private (real client documents never enter the repository)
 
@@ -25,15 +25,15 @@ flowchart LR
   ex --> norm[normalizer<br/>KZ/RU glossary,<br/>units: enum + fuzzy]
   norm --> st[structurer<br/>LLM: column meaning,<br/>chunks, retries, flag on failure]
   st --> val[validator<br/>SQLite rates,<br/>fuzzy matching, rules]
-  st --> rag[RAG over SNiP RK]
-  val & rag --> rep[/Excel report · Streamlit/]
+  st -.-> rag[RAG over SNiP RK<br/>planned]
+  val --> rep[/Excel report · Streamlit/]
   classDef llm fill:#312e81,stroke:#818cf8,color:#fff
   classDef det fill:#064e3b,stroke:#34d399,color:#fff
   class st,rag llm
   class ex,norm,val det
 ```
 
-Purple marks the LLM steps, green marks the deterministic ones.
+Purple marks the LLM steps, green marks the deterministic ones. The dashed line is the RAG over building codes on Qdrant — designed but not implemented yet.
 
 ## Details
 
@@ -51,5 +51,5 @@ Purple marks the LLM steps, green marks the deterministic ones.
 
 ## Honest limitations
 
-This is a competition demo, not production. The rate database in tests is synthetic; the real
+This is a competition demo, not production. RAG over SNiP RK is not implemented yet: the current version checks only against the rate database. The rate database in tests is synthetic; the real
 document corpus never enters git. The outcome of the accelerator is not covered in this case study.
