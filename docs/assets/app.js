@@ -7,7 +7,7 @@
   /* ---------------- i18n: RU lives in the HTML, EN here ---------------- */
   const EN = {
     "skip": "Skip to content",
-    "nav.infra": "Infrastructure", "nav.agents": "Agents", "nav.projects": "Projects", "nav.pm": "Postmortems", "nav.stack": "Stack", "nav.contact": "Contact",
+    "nav.infra": "Infrastructure", "nav.agents": "Agents", "nav.repo": "Portfolio repository on GitHub", "nav.projects": "Projects", "nav.pm": "Postmortems", "nav.stack": "Stack", "nav.contact": "Contact",
     "hero.eyebrow": "Open to offers · DevOps / MLOps / AI",
     "hero.h1a": "Infrastructure",
     "hero.h1b": "that LLMs run on",
