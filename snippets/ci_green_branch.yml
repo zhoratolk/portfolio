@@ -1,0 +1,103 @@
+# Excerpt from a private repository (.github/workflows/tests.yml).
+# CI: tests + offline eval on every push; on master, fast-forward `green` which the server deploys.
+# Trimmed for the portfolio: helpers and config loading are omitted; logic is unchanged.
+
+# The test suite, run by somebody other than the person who wrote the change.
+#
+# Until now the only thing that ran these 1810 tests was a laptop, by hand, when it
+# occurred to somebody. That is not a safety net - it is a habit, and habits skip the day
+# you are in a hurry, which is the day you needed them.
+#
+# The second job is the interesting half. It moves a branch called `green` to whatever
+# commit just passed, and the server deploys `green` rather than `master`. So "tested"
+# stops being a claim in a commit message and becomes a git ref: if the tests failed,
+# `green` simply does not move, and the server keeps running the last commit that worked.
+# No token, no callback, no API - the server only has to be able to run `git fetch`, which
+# it already could.
+
+name: tests
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+# A second push while the first is still running makes the first one pointless: it is
+# testing a commit nobody will deploy any more. Cancel it and test the newer one.
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          # The Dockerfile's Ubuntu 24.04 ships 3.12. Testing on a different minor version
+          # than production runs is how a syntax feature or a stdlib change gets found by
+          # a user instead of by this file.
+          python-version: "3.12"
+          cache: pip
+
+      # ubuntu-latest does not ship ffmpeg, and parts of this suite shell out to
+      # ffprobe rather than mocking it - deliberately, since what those tests check is
+      # that the command line we build is one ffmpeg actually accepts. Without it they
+      # fail on FileNotFoundError, which says nothing about the code.
+      - name: Install ffmpeg
+        run: sudo apt-get update -qq && sudo apt-get install -y --no-install-recommends ffmpeg
+
+      # The project, plus pytest. Deliberately not the `diarization` extra: it pulls
+      # torch and its CUDA wheels, about four gigabytes, and worker/diarize.py imports
+      # those lazily precisely so a machine without them still runs everything else.
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e . pytest pytest-timeout
+
+      # --durations and --timeout are here for a reason rather than for tidiness. The
+      # first run of this workflow was killed at the twenty-minute mark having not
+      # finished a suite that takes 61 seconds on a desktop, and a cancelled job prints
+      # nothing: no durations, no failing test, no clue. --timeout kills a single test
+      # that blocks and names it with a stack trace; --durations says where the minutes
+      # went when nothing blocks and the runner is simply slower.
+      - name: Run the suite
+        run: pytest -q --durations=25 --timeout=180 --timeout-method=thread
+
+      # The moment selection evaluation, on the committed fixtures only - the real corpus
+      # is user data and never leaves the server. This makes no API calls and takes about
+      # a second; it is here because the question it answers is one the unit tests cannot
+      # ask. A test says the repair chain still returns a list. This says the moments it
+      # returns are the same ones it returned before the change, and names them when they
+      # are not.
+      - name: Evaluate moment selection
+        run: python -m eval.run --fixtures
+
+  # Only after the suite is green, and only for master: a pull request is a proposal, not
+  # something to deploy.
+  promote:
+    needs: test
+    if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          # The whole history, not the default depth of 1. Moving `green` forward is a
+          # fast-forward, and git cannot prove a commit descends from another when it has
+          # neither of them - so from a shallow clone the push comes back "! [rejected]
+          # (fetch first)" even though it is a perfectly ordinary fast-forward.
+          #
+          # Deliberately not answered with --force. A push that is genuinely not a
+          # fast-forward means `green` is ahead of master, which is worth a red run rather
+          # than a silent overwrite.
+          fetch-depth: 0
+
+      - name: Move `green` to this commit
+        run: |
+          git push origin "${GITHUB_SHA}:refs/heads/green"
+          echo "green -> ${GITHUB_SHA}"

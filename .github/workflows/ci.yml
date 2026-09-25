@@ -1,0 +1,46 @@
+# Checks that run on every push: nothing secret leaks into a public repo, and nothing
+# in the case studies points at a file that is not there.
+
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  secrets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0   # scan the whole history, not only the last commit
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      # Offline: only relative links between files of this repo are checked. External
+      # links are left alone so a slow third-party site cannot turn the build red.
+      - uses: lycheeverse/lychee-action@v2
+        with:
+          args: --offline --no-progress --include-fragments './**/*.md' 'docs/**/*.html'
+          fail: true
+
+  site:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - name: HTML validity
+        run: npx --yes html-validate@9 docs/index.html
+      - name: JavaScript parses
+        run: node --check docs/assets/app.js

@@ -1,0 +1,55 @@
+# Excerpt from a private repository (ansible/site.yml).
+# The server as code: --check --diff must report changed=0 against the live host.
+# Trimmed for the portfolio: helpers and config loading are omitted; logic is unchanged.
+
+# The server, written down.
+#
+# Until now this machine existed only as a sequence of commands typed over three weeks and
+# remembered in a chat log. That is fine until the disk dies, and then the question "what
+# was installed here" has no answer that can be trusted. This file is the answer, and it is
+# testable: `--check --diff` against the running server should report no changes, which is
+# the only proof that the description matches the thing described.
+#
+# What it deliberately does NOT do:
+#   * write secrets - see roles/ops, the env file is created empty and filled by
+#     `sudo alerts-setup`, which is interactive on purpose so the values never enter a log;
+#   * enable the firewall - see roles/firewall;
+#   * restart the application - the deploy agent owns that.
+
+- name: The shortmaker-business host
+  hosts: shortmaker
+  become: true
+
+  # A run that begins by breaking the thing it is about to configure is worse than no run.
+  # These two facts are cheap and rule out the two ways this playbook could be pointed at
+  # the wrong machine.
+  pre_tasks:
+    - name: Refuse to run against anything but Ubuntu
+      ansible.builtin.assert:
+        that:
+          - ansible_facts['distribution'] == 'Ubuntu'
+          - ansible_facts['distribution_major_version'] | int >= 26
+        fail_msg: >-
+          This playbook describes Ubuntu 26.04. It found
+          {{ ansible_facts['distribution'] }} {{ ansible_facts['distribution_version'] }},
+          and package names, repository codenames and the driver package all differ
+          between releases.
+      tags: [always]
+
+  roles:
+    - role: base
+      tags: [base]
+    - role: network
+      tags: [network]
+    - role: storage
+      tags: [storage]
+    - role: docker
+      tags: [docker]
+    - role: gpu
+      tags: [gpu]
+    - role: samba
+      tags: [samba]
+    - role: ops
+      tags: [ops]
+    - role: firewall
+      tags: [firewall]

@@ -1,0 +1,88 @@
+# Excerpt from a private repository (ansible/roles/firewall/tasks/main.yml).
+# Ansible role: ufw rules first, default-deny policy last, gated behind a flag.
+# Trimmed for the portfolio: helpers and config loading are omitted; logic is unchanged.
+
+# The firewall, written down but switched off.
+#
+# `firewall_enabled` is false in host_vars, so by default this role only describes the
+# rules. Turning it on is a decision to make while sitting at the machine, or at least
+# while able to reach it another way, because the failure mode is specific and total: a
+# default-deny policy applied before the SSH rule locks the session out mid-run, and the
+# playbook cannot finish because it can no longer talk to the host it just cut off.
+#
+# The order below is therefore not stylistic. Rules first, policy last.
+#
+# Enable it with:  ansible-playbook site.yml -t firewall -e firewall_enabled=true
+
+- name: Install ufw
+  ansible.builtin.apt:
+    name: ufw
+    state: present
+
+- name: Allow SSH
+  community.general.ufw:
+    rule: allow
+    port: "22"
+    proto: tcp
+    comment: "ssh - allowed before any default-deny policy, see the comment at the top of this role"
+
+- name: Allow Samba from the local network only
+  community.general.ufw:
+    rule: allow
+    port: "{{ item }}"
+    proto: tcp
+    # The share has no business being reachable from anywhere but the flat. Reaching it
+    # from the tailnet is not covered by this rule and is not meant to be: a device on the
+    # tailnet is not on the LAN subnet, and the share is for the machines in the flat.
+    src: "{{ lan_cidr }}"
+    comment: "samba - LAN only"
+  loop:
+    - "445"
+    - "139"
+
+- name: Allow the Windows discovery protocol from the local network
+  community.general.ufw:
+    rule: allow
+    port: "3702"
+    proto: udp
+    src: "{{ lan_cidr }}"
+    comment: "wsdd - lets Windows find the share"
+
+# Tailscale's own traffic. SSH over the tailnet is already covered - the rule above
+# matches tcp/22 whatever interface it arrives on - but a direct wireguard connection
+# needs this, and without it Tailscale silently falls back to relaying through DERP. That
+# failure has no error and no log line: the tailnet keeps working, just slower and through
+# somebody else's server.
+- name: Allow direct Tailscale connections
+  community.general.ufw:
+    rule: allow
+    port: "41641"
+    proto: udp
+    comment: "tailscale - direct connections, without this it silently relays"
+
+# The router sends an IGMP membership query to 224.0.0.1 every fifteen seconds. The
+# default policy drops it, and ufw writes a line about it every time - about three a
+# minute, four thousand a day, in the same kernel log that gets read when something has
+# gone wrong. The packet is not interesting and the log is, so drop it before the chain
+# that logs.
+#
+# Narrow on purpose. Dropping multicast wholesale would also drop what the Windows share
+# discovery needs (mDNS, wsdd on 239.255.255.250), and the rule above opening 3702 would
+# quietly stop meaning anything. Protocol 2 only.
+- name: Drop the router's IGMP queries without logging them
+  ansible.builtin.blockinfile:
+    path: /etc/ufw/before.rules
+    # ufw reads this file before its own chains, so a DROP here never reaches the rule
+    # that writes the log line. There is no "deny quietly" in ufw's own rule syntax.
+    insertafter: '^-A ufw-before-input -i lo -j ACCEPT$'
+    marker: "# {mark} ANSIBLE MANAGED - igmp noise"
+    block: |
+      -A ufw-before-input -p igmp -d 224.0.0.0/4 -j DROP
+  notify: Reload ufw
+
+- name: Set the default policy and enable the firewall
+  community.general.ufw:
+    state: enabled
+    policy: deny
+    direction: incoming
+  when: firewall_enabled | bool

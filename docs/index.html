@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Георгий — DevOps / MLOps</title>
+  <meta name="description" content="Портфолио DevOps / MLOps-инженера: GPU-сервер как код, CI/CD с откатом, LLM в продакшене, оценка качества моделей.">
+  <meta property="og:title" content="Георгий — DevOps / MLOps">
+  <meta property="og:description" content="GPU-сервер как код, CI/CD с откатом, LLM в продакшене. Кейсы с постмортемами.">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#070b14">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css?v=2">
+</head>
+<body>
+<a class="skip" href="#main" data-i18n="skip">К содержимому</a>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="В начало"><b>zhora</b>@tower:~$</a>
+    <nav class="nav-links" aria-label="Разделы">
+      <a href="#infra" data-i18n="nav.infra">Инфраструктура</a>
+      <a href="#projects" data-i18n="nav.projects">Проекты</a>
+      <a href="#postmortems" data-i18n="nav.pm">Постмортемы</a>
+      <a href="#stack" data-i18n="nav.stack">Стек</a>
+      <a href="#contact" data-i18n="nav.contact">Контакты</a>
+    </nav>
+    <div class="lang" role="group" aria-label="Язык / Language">
+      <button type="button" data-lang="ru" aria-pressed="true">RU</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" id="top">
+    <div class="wrap">
+      <div>
+        <span class="eyebrow"><span class="pulse" aria-hidden="true"></span><span data-i18n="hero.eyebrow">Открыт к предложениям · DevOps / MLOps</span></span>
+        <h1><span data-i18n="hero.h1a">Инфраструктура,</span><br><span class="grad" data-i18n="hero.h1b">на которой живут LLM</span></h1>
+        <p class="lead" data-i18n="hero.lead">Меня зовут Георгий. Собираю и эксплуатирую GPU-инфраструктуру под AI-продукты: от железа и Ansible до автодеплоя с откатом, мониторинга и оценки качества моделей. Всё ниже поднято и работает, учебных проектов здесь нет.</p>
+        <div class="cta">
+          <a class="btn primary" href="#projects">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+            <span data-i18n="hero.cta1">Смотреть проекты</span>
+          </a>
+          <a class="btn" href="https://github.com/zhoratolk/portfolio" data-i18n-href="repo">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg>
+            <span data-i18n="hero.cta2">Кейсы на GitHub</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="term" role="img" aria-label="Лог автоматического деплоя с откатом" data-i18n-aria="term.aria">
+        <div class="term-bar"><i></i><i></i><i></i><span>tower — deploy-agent</span></div>
+        <pre id="term" aria-hidden="true"></pre>
+      </div>
+    </div>
+  </section>
+
+  <section class="stats" aria-label="Цифры" data-i18n-aria="stats.aria">
+    <div class="wrap">
+      <div class="stats-grid">
+        <div class="stat"><b data-count="3">3</b><span data-i18n="stats.s1">сервиса в проде на своём GPU-сервере</span></div>
+        <div class="stat"><b data-count="5500" data-suffix="+">5500+</b><span data-i18n="stats.s2">автотестов в проектах</span></div>
+        <div class="stat"><b data-count="1200" data-suffix="+">1200+</b><span data-i18n="stats.s3">коммитов за 2026 год</span></div>
+        <div class="stat"><b>~11 ₽</b><span data-i18n="stats.s4">себестоимость обработки 3-часовой записи</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="what-h">
+    <div class="wrap">
+      <p class="kicker reveal" data-i18n="what.k">Что я делаю</p>
+      <h2 class="reveal" id="what-h" data-i18n="what.h">Три направления, одна машина</h2>
+      <p class="sub reveal" data-i18n="what.sub">Инфраструктура, ML-пайплайны и LLM-системы. Каждое направление обкатано на реальной нагрузке, а не на демо-стенде.</p>
+      <div class="pillars">
+        <article class="card reveal">
+          <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="7" rx="2"/><rect x="2" y="14" width="20" height="7" rx="2"/><path d="M6 6.5h.01M6 17.5h.01"/></svg></div>
+          <h3 data-i18n="p1.h">Инфраструктура и эксплуатация</h3>
+          <p data-i18n="p1.p">Сервер как код, деплой без присмотра, выживаемость при отказах.</p>
+          <ul>
+            <li data-i18n="p1.l1">Ansible: 8 ролей, <code>changed=0</code> на живой машине</li>
+            <li data-i18n="p1.l2">Pull-деплой с healthcheck и откатом</li>
+            <li data-i18n="p1.l3">Сторож, дедман-свич, бэкапы 3-2-1</li>
+          </ul>
+        </article>
+        <article class="card reveal">
+          <div class="icon b" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/></svg></div>
+          <h3 data-i18n="p2.h">GPU и ML-пайплайны</h3>
+          <p data-i18n="p2.p">Транскрипция, диаризация и рендер видео на двух картах.</p>
+          <ul>
+            <li data-i18n="p2.l1">faster-whisper large-v3 + pyannote ≈14× реального времени</li>
+            <li data-i18n="p2.l2">Аренда GPU между проектами без общего кода</li>
+            <li data-i18n="p2.l3">Бюджет сессий NVENC, CDI, модели закреплены по хэшу</li>
+          </ul>
+        </article>
+        <article class="card reveal">
+          <div class="icon v" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 4.6L18.5 9.5l-4.6 1.9L12 16l-1.9-4.6L5.5 9.5l4.6-1.9Z"/><path d="M19 15l.9 2.1L22 18l-2.1.9L19 21l-.9-2.1L16 18l2.1-.9Z"/></svg></div>
+          <h3 data-i18n="p3.h">LLM-системы</h3>
+          <p data-i18n="p3.p">Модели там, где они нужны, и код там, где нужна точность.</p>
+          <ul>
+            <li data-i18n="p3.l1">Circuit breaker и маршрутизация по стоимости</li>
+            <li data-i18n="p3.l2">Eval harness: инварианты и baseline в CI</li>
+            <li data-i18n="p3.l3">RAG, LangGraph с человеком в контуре, рой агентов</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="infra" aria-labelledby="infra-h">
+    <div class="wrap">
+      <p class="kicker reveal" data-i18n="infra.k">Флагман</p>
+      <h2 class="reveal" id="infra-h" data-i18n="infra.h">Домашний GPU-сервер, описанный кодом</h2>
+      <p class="sub reveal" data-i18n="infra.sub">Две RTX 3060, три проекта и ни одного общего планировщика. Карты делятся через файлы-заявки со свежестью по mtime, деплой идёт через git, а о смерти машины сообщает внешний сторож.</p>
+      <div class="diagram reveal">
+        <svg viewBox="0 0 1100 450" role="img" aria-labelledby="dg-t" xmlns="http://www.w3.org/2000/svg">
+          <title id="dg-t">Архитектура домашнего GPU-сервера</title>
+          <defs>
+            <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#64748b"/></marker>
+            <marker id="arg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#22c55e"/></marker>
+            <linearGradient id="gpu" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#22c55e" stop-opacity=".18"/><stop offset="1" stop-color="#22c55e" stop-opacity=".04"/></linearGradient>
+          </defs>
+          <g font-size="13" fill="#cbd5e1">
+            <!-- left: workstation -->
+            <rect x="20" y="20" width="190" height="175" rx="12" fill="#0b1120" stroke="#2a3752"/>
+            <text x="36" y="46" fill="#8b9ab3" font-size="12" class="mono" data-i18n="dg.ws">РАБОЧИЙ ПК · WINDOWS</text>
+            <rect x="36" y="62" width="158" height="46" rx="8" fill="#0f172a" stroke="#2a3752"/>
+            <text x="50" y="82" fill="#f1f5f9" font-weight="600">OBS</text>
+            <text x="50" y="99" fill="#8b9ab3" font-size="12" data-i18n="dg.obs">записи стримов</text>
+            <rect x="36" y="124" width="158" height="46" rx="8" fill="#0f172a" stroke="#2a3752"/>
+            <text x="50" y="144" fill="#f1f5f9" font-weight="600">Ansible · WSL</text>
+            <text x="50" y="161" fill="#8b9ab3" font-size="12">site.yml --check --diff</text>
+
+            <rect x="20" y="300" width="190" height="70" rx="12" fill="#0b1120" stroke="#2a3752"/>
+            <text x="36" y="328" fill="#f1f5f9" font-weight="600" data-i18n="dg.users">Пользователи</text>
+            <text x="36" y="348" fill="#8b9ab3" font-size="12" data-i18n="dg.users2">Telegram-бот Катча</text>
+
+            <!-- server -->
+            <rect x="250" y="20" width="590" height="415" rx="16" fill="#0a1222" stroke="#22c55e" stroke-opacity=".55"/>
+            <text x="270" y="47" fill="#22c55e" font-size="12" class="mono" data-i18n="dg.srv">GPU-СЕРВЕР · UBUNTU 26.04 · ANSIBLE</text>
+
+            <g>
+              <rect x="270" y="66" width="130" height="60" rx="9" fill="#0f172a" stroke="#2a3752"/>
+              <text x="284" y="91" fill="#f1f5f9" font-weight="600" data-i18n="dg.katch">Катч</text>
+              <text x="284" y="110" fill="#8b9ab3" font-size="12" data-i18n="dg.katch2">SaaS · бот + воркер</text>
+              <rect x="412" y="66" width="130" height="60" rx="9" fill="#0f172a" stroke="#2a3752"/>
+              <text x="426" y="91" fill="#f1f5f9" font-weight="600">Shorts-Maker</text>
+              <text x="426" y="110" fill="#8b9ab3" font-size="12" data-i18n="dg.shorts2">ingest · render</text>
+              <rect x="554" y="66" width="130" height="60" rx="9" fill="#0f172a" stroke="#2a3752"/>
+              <text x="568" y="91" fill="#f1f5f9" font-weight="600" data-i18n="dg.zapoy">Запой</text>
+              <text x="568" y="110" fill="#8b9ab3" font-size="12">llama.cpp · Qdrant</text>
+              <rect x="696" y="66" width="130" height="60" rx="9" fill="#0f172a" stroke="#2a3752"/>
+              <text x="710" y="91" fill="#f1f5f9" font-weight="600">Vtube R&amp;D</text>
+              <text x="710" y="110" fill="#8b9ab3" font-size="12" data-i18n="dg.vtube2">гостевой том</text>
+            </g>
+
+            <g stroke="#64748b" stroke-width="1.3" marker-end="url(#ar)">
+              <line x1="335" y1="126" x2="335" y2="156"/><line x1="477" y1="126" x2="477" y2="156"/>
+              <line x1="619" y1="126" x2="619" y2="156"/><line x1="761" y1="126" x2="761" y2="156"/>
+            </g>
+
+            <rect x="270" y="158" width="556" height="38" rx="8" fill="#38bdf8" fill-opacity=".08" stroke="#38bdf8" stroke-opacity=".45"/>
+            <text x="286" y="182" fill="#38bdf8" font-size="12.5" class="mono" data-i18n="dg.claims">gpu-claims: заявка = файл, свежесть по mtime → lease()</text>
+
+            <g stroke="#22c55e" stroke-width="1.3" marker-end="url(#arg)">
+              <line x1="404" y1="196" x2="404" y2="222"/><line x1="692" y1="196" x2="692" y2="222"/>
+            </g>
+
+            <rect x="270" y="224" width="268" height="70" rx="10" fill="url(#gpu)" stroke="#22c55e" stroke-opacity=".6"/>
+            <text x="286" y="252" fill="#f1f5f9" font-weight="700" class="mono">GPU0 · RTX 3060 12GB</text>
+            <text x="286" y="274" fill="#8b9ab3" font-size="12" data-i18n="dg.gpu0">только платная очередь</text>
+            <rect x="558" y="224" width="268" height="70" rx="10" fill="url(#gpu)" stroke="#22c55e" stroke-opacity=".6"/>
+            <text x="574" y="252" fill="#f1f5f9" font-weight="700" class="mono">GPU1 · RTX 3060 12GB</text>
+            <text x="574" y="274" fill="#8b9ab3" font-size="12" data-i18n="dg.gpu1">гибрид: очередь + личные задачи</text>
+
+            <rect x="270" y="318" width="130" height="96" rx="9" fill="#0f172a" stroke="#2a3752"/>
+            <text x="284" y="343" fill="#f1f5f9" font-weight="600">Samba</text>
+            <text x="284" y="362" fill="#8b9ab3" font-size="12">/srv/media</text>
+            <text x="284" y="380" fill="#8b9ab3" font-size="12" data-i18n="dg.samba">записи · клипы</text>
+            <rect x="412" y="318" width="126" height="96" rx="9" fill="#0f172a" stroke="#2a3752"/>
+            <text x="426" y="343" fill="#f1f5f9" font-weight="600">Docker 29</text>
+            <text x="426" y="362" fill="#8b9ab3" font-size="12">NVIDIA CTK · CDI</text>
+            <text x="426" y="380" fill="#8b9ab3" font-size="12">ufw · Tailscale</text>
+            <rect x="558" y="318" width="268" height="96" rx="9" fill="#0f172a" stroke="#2a3752"/>
+            <text x="574" y="343" fill="#f1f5f9" font-weight="600">systemd timers</text>
+            <text x="574" y="364" fill="#8b9ab3" font-size="12" class="mono">deploy  3m   backup   daily</text>
+            <text x="574" y="383" fill="#8b9ab3" font-size="12" class="mono">watchdog 1m   metrics  weekly</text>
+            <text x="574" y="402" fill="#8b9ab3" font-size="12" class="mono">heartbeat → gist  1m</text>
+
+            <!-- right -->
+            <rect x="880" y="20" width="200" height="175" rx="12" fill="#0b1120" stroke="#2a3752"/>
+            <text x="896" y="46" fill="#8b9ab3" font-size="12" class="mono">GITHUB</text>
+            <text x="896" y="76" fill="#f1f5f9" font-weight="600">Actions · CI</text>
+            <text x="896" y="94" fill="#8b9ab3" font-size="12" data-i18n="dg.ci">тесты → ветка green</text>
+            <text x="896" y="124" fill="#f1f5f9" font-weight="600" data-i18n="dg.gist">Секретный gist</text>
+            <text x="896" y="142" fill="#8b9ab3" font-size="12" data-i18n="dg.gist2">пульс: &lt;epoch&gt; ok|fail</text>
+            <text x="896" y="170" fill="#f1f5f9" font-weight="600" data-i18n="dg.dm">Дедман-cron</text>
+            <text x="896" y="186" fill="#8b9ab3" font-size="12" data-i18n="dg.dm2">тишина &gt; 30 мин → алерт</text>
+
+            <rect x="880" y="222" width="200" height="56" rx="12" fill="#0b1120" stroke="#2a3752"/>
+            <text x="896" y="245" fill="#f1f5f9" font-weight="600" data-i18n="dg.tg">Telegram-алерты</text>
+            <text x="896" y="264" fill="#8b9ab3" font-size="12">send-only bot</text>
+            <rect x="880" y="298" width="200" height="56" rx="12" fill="#0b1120" stroke="#2a3752"/>
+            <text x="896" y="321" fill="#f1f5f9" font-weight="600" data-i18n="dg.cloud">Облако · бэкапы</text>
+            <text x="896" y="340" fill="#8b9ab3" font-size="12" data-i18n="dg.cloud2">клипы 48 ч · 3-2-1</text>
+            <rect x="880" y="374" width="200" height="56" rx="12" fill="#0b1120" stroke="#2a3752"/>
+            <text x="896" y="397" fill="#f1f5f9" font-weight="600">YouTube API</text>
+            <text x="896" y="416" fill="#8b9ab3" font-size="12" data-i18n="dg.yt">публикация · досмотры</text>
+
+            <!-- flows -->
+            <g fill="none" stroke-width="1.6">
+              <path class="dg-flow" d="M194 85 C 232 85, 236 366, 268 366" stroke="#38bdf8" marker-end="url(#ar)"/>
+              <path class="dg-flow" d="M194 147 C 222 147, 226 147, 248 147" stroke="#a78bfa" marker-end="url(#ar)"/>
+              <path class="dg-flow" d="M210 335 C 240 335, 238 96, 268 96" stroke="#f59e0b" marker-end="url(#ar)"/>
+              <path class="dg-flow" d="M880 85 C 858 85, 856 330, 828 340" stroke="#22c55e" marker-end="url(#arg)"/>
+              <path class="dg-flow" d="M828 400 C 860 400, 858 134, 878 134" stroke="#22c55e" marker-end="url(#arg)"/>
+              <path class="dg-flow" d="M980 196 L 980 220" stroke="#f87171" marker-end="url(#ar)"/>
+              <path class="dg-flow" d="M842 250 L 878 250" stroke="#64748b" marker-end="url(#ar)"/>
+              <path class="dg-flow" d="M842 326 L 878 326" stroke="#64748b" marker-end="url(#ar)"/>
+              <path class="dg-flow" d="M842 402 L 878 402" stroke="#64748b" marker-end="url(#ar)"/>
+            </g>
+          </g>
+        </svg>
+      </div>
+      <div class="legend reveal">
+        <span><i style="background:#22c55e"></i><span data-i18n="lg.deploy">git-деплой и пульс</span></span>
+        <span><i style="background:#38bdf8"></i><span data-i18n="lg.data">записи по SMB</span></span>
+        <span><i style="background:#a78bfa"></i><span data-i18n="lg.iac">конфигурация через Ansible</span></span>
+        <span><i style="background:#f59e0b"></i><span data-i18n="lg.users">пользовательский трафик</span></span>
+        <span><i style="background:#f87171"></i><span data-i18n="lg.alert">алерт о смерти</span></span>
+      </div>
+
+      <h3 class="reveal" style="margin-top:56px" data-i18n="pipe.h">Деплой, которому можно не мешать</h3>
+      <div class="pipe reveal">
+        <div class="step"><h4 data-i18n="pipe.1h">Push</h4><p data-i18n="pipe.1p">PR или master, прямых пушей в прод нет</p></div>
+        <div class="step"><h4 data-i18n="pipe.2h">CI</h4><p data-i18n="pipe.2p">2 200+ тестов и offline-оценка LLM-отбора</p></div>
+        <div class="step"><h4 data-i18n="pipe.3h">green</h4><p data-i18n="pipe.3p">fast-forward ветки только при зелёном CI</p></div>
+        <div class="step"><h4 data-i18n="pipe.4h">Pull</h4><p data-i18n="pipe.4p">сервер сам делает fetch раз в 3 минуты, если очередь пуста</p></div>
+        <div class="step"><h4 data-i18n="pipe.5h">Health</h4><p data-i18n="pipe.5p">сервисы подняты и держатся: две проверки с паузой</p></div>
+        <div class="step alt"><h4 data-i18n="pipe.6h">Rollback</h4><p data-i18n="pipe.6p">не поднялось — откат на предыдущий SHA и алерт</p></div>
+      </div>
+      <p class="pipe-note reveal" data-i18n="pipe.note">Без открытых портов, вебхуков и токенов на сервере: ему достаточно уметь <code>git fetch</code>. «Протестировано» здесь — это git-ref, а не фраза в сообщении коммита.</p>
+    </div>
+  </section>
+
+  <section class="block" id="projects" aria-labelledby="proj-h">
+    <div class="wrap">
+      <p class="kicker reveal" data-i18n="proj.k">Проекты</p>
+      <h2 class="reveal" id="proj-h" data-i18n="proj.h">Кейсы с архитектурой, цифрами и граблями</h2>
+      <p class="sub reveal" data-i18n="proj.sub">Код основных проектов закрыт. Каждый кейс описывает задачу, архитектуру, инженерные решения, инциденты и честные ограничения. Вычищенные фрагменты кода лежат в репозитории.</p>
+      <div class="filters" role="group" aria-label="Фильтр проектов" data-i18n-aria="proj.filter" id="filters"></div>
+      <div class="grid" id="grid"></div>
+    </div>
+  </section>
+
+  <section class="block" id="postmortems" aria-labelledby="pm-h">
+    <div class="wrap">
+      <p class="kicker reveal" data-i18n="pm.k">Постмортемы</p>
+      <h2 class="reveal" id="pm-h" data-i18n="pm.h">Что ломалось и как это нашлось</h2>
+      <p class="sub reveal" data-i18n="pm.sub">Главный навык эксплуатации — доводить поиск до причины, а не до исчезновения симптома. Несколько историй из журнала.</p>
+      <div class="pm" id="pm"></div>
+    </div>
+  </section>
+
+  <section class="block" id="stack" aria-labelledby="stack-h">
+    <div class="wrap">
+      <p class="kicker reveal" data-i18n="st.k">Стек</p>
+      <h2 class="reveal" id="stack-h" data-i18n="st.h">Честно по уровням</h2>
+      <div class="tiers" id="tiers"></div>
+      <p class="rule reveal" data-i18n="st.rule">Правило: технология попадает в первую строку, только если я могу три минуты рассказывать, что с ней ломалось и как я это чинил.</p>
+    </div>
+  </section>
+
+  <section class="contact" id="contact" aria-labelledby="ct-h">
+    <div class="wrap">
+      <h2 id="ct-h" class="reveal" data-i18n="ct.h">Ищу команду, где инфраструктура — это продукт</h2>
+      <p class="sub reveal" data-i18n="ct.sub">ML-платформа, инференс или SRE. Санкт-Петербург, удалённо или гибрид, рассматриваю переезд в Алматы.</p>
+      <div class="cta reveal">
+        <a class="btn primary" href="https://github.com/zhoratolk">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg>
+          github.com/zhoratolk
+        </a>
+        <a class="btn" href="https://github.com/zhoratolk/portfolio" data-i18n-href="repo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h7v7M10 14 21 3M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"/></svg>
+          <span data-i18n="ct.repo">Репозиторий портфолио</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span data-i18n="ft.l">© 2026 Георгий · статичный сайт без фреймворков</span>
+    <span class="mono">static · GitHub Pages · gitleaks-clean</span>
+  </div>
+</footer>
+
+<script src="assets/app.js?v=2"></script>
+</body>
+</html>
